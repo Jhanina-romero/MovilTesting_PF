@@ -12,39 +12,28 @@ import session.Session;
 import java.util.Random;
 
 public class CalendarTest {
-    CalendarMainScreen calendaMainScreen = new CalendarMainScreen();
+    CalendarMainScreen calendarMainScreen = new CalendarMainScreen();
     AddEventScreen addEventScreen = new AddEventScreen();
     EventItemScreen eventItemScreen = new EventItemScreen();
     ConfimationScreen confimationScreen = new ConfimationScreen();
 
 
     @Test
-    public void createEventTest(){
-        String expectedEventTitle = generateEventTitle();
-        calendaMainScreen.addButton.click();
-        addEventScreen.eventTitle.setText(expectedEventTitle);
-        addEventScreen.repitAllDayCheckbox.click();
-        addEventScreen.saveButton.click();
-
-        Assertions.assertTrue(calendaMainScreen.getEventTittle(expectedEventTitle).isControlDisplayed(), "ERROR>>> El evento no fue creado");
-    }
-
-    @Test
-    public void deleteEventTest(){
+    public void createAndDeleteEventTest(){
         String eventTitle = generateEventTitle();
-        calendaMainScreen.addButton.click();
+        calendarMainScreen.addButton.click();
         addEventScreen.eventTitle.setText(eventTitle);
         addEventScreen.repitAllDayCheckbox.click();
         addEventScreen.saveButton.click();
 
-        calendaMainScreen.getEventItem(eventTitle).click();
+        calendarMainScreen.getEventItem(eventTitle).click();
         eventItemScreen.deleteButton.click();
         confimationScreen.acceptButton.click();
         if (eventItemScreen.closeButton.isControlDisplayed()){
             eventItemScreen.closeButton.click();
         }
 
-        Assertions.assertFalse(calendaMainScreen.getEventTittle(eventTitle).isControlDisplayed(), "ERROR>>> El evento no fue eleminado");
+        Assertions.assertFalse(calendarMainScreen.getEventTittle(eventTitle).isControlDisplayed(), "ERROR>>> El evento no fue eleminado");
 
     }
 
